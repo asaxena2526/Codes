@@ -22,8 +22,50 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 				Mat[i]=new int[size];
 			}
 		}
-		~AdjacencyMatrix();
+		~AdjacencyMatrix()
+		{
+			delete Mat;
+		}
 
+		bool edgeExists(int i,int j)
+		{
+			return Mat[i][j];
+		}
+		int vertices()
+		{
+			return size;
+		}
+		int edges()
+		{
+			int e=0;
+			for(int i=0;i<size;i++)
+			{
+				for(int j=0;j<size;j++)
+				{
+					if(Mat[i][j]!=0)
+						e++;
+				}
+			}
+			return e;
+		}
+		void add(int i, int j)
+		{
+			Mat[i][j]=1;
+		}
+		void remove(int i, int j)
+		{
+			Mat[i][j]=0;
+		}
+		int degree(int i)
+		{
+			int d=0;
+			for(int j=0;j<size;j++)
+			{
+				if(Mat[i][j]!=0)
+					d++;
+			}
+			return d;
+		}
 };
 
 #endif /* ifndef ADJACENCY_MATRIX */
