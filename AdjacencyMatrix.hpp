@@ -2,7 +2,8 @@
 #define ADJACENCY_MATRIX 1
 
 #include "GraphAdjacencyBase.hpp"
-
+#include <iostream>
+using namespace std;
 /*
  * 	Class AdjacencyMatrix
  *	Can be used to represent a Graph using adjacency-matrix.
@@ -16,7 +17,7 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 		AdjacencyMatrix(int vertices)
 		{
 			size=vertices;
-			Mat=new int*[size]
+			Mat=new int*[size];
 			for (int i = 0; i < size; i++)
 			{
 				Mat[i]=new int[size];
@@ -48,8 +49,9 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 			}
 			return e;
 		}
-		void add(int i, int j)
+		virtual void addi(int i, int j)
 		{
+			//cout<<"a2 "<<endl;
 			Mat[i][j]=1;
 		}
 		void remove(int i, int j)

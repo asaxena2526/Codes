@@ -1,6 +1,8 @@
 #ifndef GRAPH_ADJACENCY_BAG
 #define GRAPH_ADJACENCY_BAG 1
 
+#include <iostream>
+using namespace std;
 /*
  * A base class which can denote any Graph Adjacency representation.
  * Subclassed by AdjacencyMatrix and AdjacencyList
@@ -13,7 +15,7 @@ class GraphAdjacencyBase {
 	/* Destructor:
 	 * releases all resources acquired by the class
 	 */
-  virtual ~GraphAdjacencyBase() {};
+ // virtual ~GraphAdjacencyBase() {};
 	/*
 	 * Function: edgeExists
 	 * Returns true if an edge exists between vertices i and j, false otherwise.
@@ -33,7 +35,10 @@ class GraphAdjacencyBase {
 	 * Function add:
 	 * Adds an edge between vertices i and j
 	 */
-  virtual void add(int i, int j) = 0;
+  virtual void addi(int i, int j)
+  {
+  //	cout<<"a5 "<<endl;
+  }
 	/*
 	 * Function: remove
 	 * Deleted the edge between vertices i and j

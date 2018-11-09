@@ -2,6 +2,7 @@
 #define UNDIRECTED_GRAPH 1
 
 #include "AbstractGraph.hpp"
+#include <iostream>
 
 
 /*

@@ -2,6 +2,7 @@
 #define ADJACENCY_LIST 1
 
 #include "GraphAdjacencyBase.hpp"
+#include <iostream>
 
 /*
  * 	Class AdjacencyList
@@ -33,7 +34,7 @@ class AdjacencyList : public GraphAdjacencyBase {
 	}
 	bool edgeExists(int i,int j)
 	{
-		Node *temp=List[i]
+		Node *temp=List[i];
 		while(temp!=NULL)
 		{
 			if(temp->value==j)
@@ -83,7 +84,7 @@ class AdjacencyList : public GraphAdjacencyBase {
 	}
 	void remove(int i, int j)
 	{
-		Node *temp=List[i]
+		Node *temp=List[i];
 		if(List[i]->value==j)
 		{
 			List[i]=List[i]->next;
