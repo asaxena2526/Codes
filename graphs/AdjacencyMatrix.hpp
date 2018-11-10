@@ -49,7 +49,7 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 			}
 			return e;
 		}
-		virtual void addi(int i, int j)
+		virtual void add(int i, int j)
 		{
 			//cout<<"a2 "<<endl;
 			Mat[i][j]=1;

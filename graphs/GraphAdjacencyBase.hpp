@@ -35,7 +35,7 @@ class GraphAdjacencyBase {
 	 * Function add:
 	 * Adds an edge between vertices i and j
 	 */
-  virtual void addi(int i, int j)
+  virtual void add(int i, int j)
   {
   //	cout<<"a5 "<<endl;
   }
