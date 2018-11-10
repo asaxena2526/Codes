@@ -5,6 +5,7 @@
 #include <iostream>
 #include "AdjacencyList.hpp"
 #include "AdjacencyMatrix.hpp"
+#include "queue.hpp"
 //#include "GraphAdjacencyBase.hpp"
 using namespace std;
 
@@ -121,7 +122,57 @@ class DirectedGraph : public AbstractGraph {
 				}
 		}
   
-  //virtual void bfs(void (*work)(int&)) = 0;
+  virtual void bfs(int start)
+  {
+    int colour[Vertices],visited[Vertices],ans[Vertices],level[Vertices];
+    for(int i=0;i<Vertices;i++)
+    {
+      colour[i]=0;
+      visited[i]=0;
+      level[i]=0;
+    }
+    Queue Q;
+    visited[start]=1;
+    //ans[0]=start;
+    int pos=0;
+    colour[start]=1;
+    Q.enqueue(start);
+    A:
+    while(Q.queue_length()!=0)
+    {
+      int t=Q.dequeue();
+      ans[pos]=t;
+      pos++;
+      for(int i=0;i<Vertices;i++)
+      {
+        if(base->edgeExists(t,i)!=0 && visited[i]==0)
+        {
+            visited[i]=1;
+            //colour[i]=0;
+            
+            Q.enqueue(i);
+            colour[i]=1;
+        }
+      }
+    }
+    for (int i = 0; i < Vertices; i++)
+    {
+      if(visited[i]==0)
+      { 
+        visited[i]=1;
+        Q.enqueue(i);
+        colour[i]=1; 
+        goto A;
+
+      }
+    }
+    for (int i = 0; i < Vertices; i++)
+    {
+      cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+
+  }
 		
 };
 
