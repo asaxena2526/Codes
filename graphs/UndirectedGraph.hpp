@@ -9,10 +9,7 @@
 * A class to represent an UndirectedGraph
 * Subclasses AbstractGraph
 */
-class UndirectedGraph : public AbstractGraph {
-
-	GraphAdjacencyBase *base;
-		
+class UndirectedGraph : public AbstractGraph {		
  	public:
 
   	/*
@@ -23,11 +20,18 @@ class UndirectedGraph : public AbstractGraph {
    	* 'm' for AdjacencyMatrix
    	* 'l' for AdjacencyList
    	*/
-  	UndirectedGraph(int vertices, char mode);
+  	UndirectedGraph(int numVertices, char rep):AbstractGraph(numVertices,rep)
+    {
+
+    }
   	/*
   	* Destructor
   	*/
-  	~UndirectedGraph(); 
+  	~UndirectedGraph();
+  virtual int edges()
+  {
+      return this->base->edges()/2;
+  }  
   	
 	};
 	
