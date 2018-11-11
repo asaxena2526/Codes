@@ -27,7 +27,8 @@ int main()
 
 	}
 	ptr.close();
-	ptr.open("in.txt");
+	cout<<word<<" "<<ir<<endl;
+	
 
 	char** A=new char*[ir];;
 
@@ -39,21 +40,26 @@ int main()
 	DirectedGraph U(ir*word,'m');
 	// for (int i = 0; i < ir; i++)
 	// {
+	ptr.open("in.txt");
 	int i=0,j=0;
 		while(ptr >> A[i][j])
 		{
 			j++;
-			if(j==5)
+			if(j==word)
 			{
 				j=0;
 				i++;
 			}
 		}
 		ptr.close();
-		// for (int j = 0; j < word; j++)
-		// {
-		// 	cin>>A[i][j]
-		// }
+		for(int i=0;i<ir;i++)
+		{
+			for (int j = 0; j < word; j++)
+			{
+				cout<<A[i][j]<<" ";
+			}
+			cout<<endl;
+		}
 	// }
 	for (int j = 0; j < ir; j++)
 	{
