@@ -50,7 +50,7 @@ int main()
 						}
 						else
 						{
-							if(i==4 && j!=4)
+							if(i==4 && j!=4 && j!=0)
 							{
 								U.add(i+j*5,i+j*5-1);
 								U.add(i+j*5,i+(j+1)*5);
@@ -58,7 +58,7 @@ int main()
 							}
 							else
 							{
-								if(i!=4 && j==4)
+								if(i!=4 && j==4 && i!=0)
 								{
 									U.add(i+j*5,i+j*5+1);
 									U.add(i+j*5,i+j*5-1);
@@ -66,8 +66,27 @@ int main()
 								}
 								else
 								{
-									U.add(i+j*5,i+j*5-1);
-									U.add(i+j*5,i+(j-1)*5);
+									if(i==4 && j==4)
+									{
+										U.add(i+j*5,i+j*5-1);
+										U.add(i+j*5,i+(j-1)*5);
+									}
+									else
+									{
+										if(i==0 && j==4)
+										{
+											U.add(i+j*5,i+j*5+1);
+											U.add(i+j*5,i+(j-1)*5);
+										}
+										else
+										{
+											if(i==4 && j==0)
+											{
+												U.add(i+j*5,i+j*5-1);
+												U.add(i+j*5,i+(j+1)*5);	
+											}
+										}
+									}
 								}
 							}
 						}

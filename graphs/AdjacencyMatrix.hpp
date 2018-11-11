@@ -22,6 +22,13 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 			{
 				Mat[i]=new int[size];
 			}
+			for (int i = 0; i < size; i++)
+			{
+				for (int j = 0; j < size; j++)
+				{
+					Mat[i][j]=0;
+				}
+			}
 		}
 		~AdjacencyMatrix()
 		{
@@ -30,6 +37,7 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 
 		bool edgeExists(int i,int j)
 		{
+			// cout<<"am"<<Mat[i][j]<<endl;
 			return Mat[i][j];
 		}
 		int vertices()
@@ -49,10 +57,14 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 			}
 			return e;
 		}
-		virtual void add(int i, int j)
+		int Weight(int i, int j)
+		{
+			return Mat[i][j];
+		}
+		virtual void add(int i, int j,int w=1)
 		{
 			// cout<<"a2 "<<endl;
-			Mat[i][j]=1;
+			Mat[i][j]=w;
 		}
 		void remove(int i, int j)
 		{

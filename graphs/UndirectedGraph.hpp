@@ -32,10 +32,10 @@ class UndirectedGraph : public AbstractGraph {
   {
     return this->base->edges()/2;
   }
-  virtual void add(int i, int j)
+  virtual void add(int i, int j,int w=1)
   {
-    this->base->add(i,j);
-    this->base->add(j,i);
+    this->base->add(i,j,w);
+    this->base->add(j,i,w);
   }
   virtual void remove(int i, int j)
   {

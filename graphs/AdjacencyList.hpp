@@ -11,6 +11,7 @@
 typedef struct S
 {
 	int value;
+	int weight;
 	struct S *next;
 }Node;
 class AdjacencyList : public GraphAdjacencyBase {
@@ -61,12 +62,13 @@ class AdjacencyList : public GraphAdjacencyBase {
 		}
 		return e;
 	}
-	void add(int i, int j)
+	void add(int i, int j,int w=1)
 	{
 		if(List[i]==NULL)
 		{
 			List[i]=new Node;
 			List[i]->value=j;
+			List[i]->weight=w;
 			List[i]->next=NULL;
 		}
 		else
@@ -79,6 +81,7 @@ class AdjacencyList : public GraphAdjacencyBase {
 			temp->next=new Node;
 			temp=temp->next;
 			temp->value=j;
+			temp->weight=w;
 			temp->next=NULL;
 		}
 	}
@@ -114,6 +117,17 @@ class AdjacencyList : public GraphAdjacencyBase {
 			temp=temp->next;
 		}
 		return d;
+	}
+	int Weight(int i,int j)
+	{
+		Node *temp=List[i];
+		while(temp!=NULL)
+		{
+			if(temp->value==j)
+				return temp->weight;
+			temp=temp->next;
+		}
+		return 0;
 	}
 		  	
 };  	

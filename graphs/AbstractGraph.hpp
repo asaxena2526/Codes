@@ -63,6 +63,10 @@ protected:
    * Function: vertices
    * Returns the number of vertices in the adjacency structure.
    */
+  virtual int Weight(int i,int j)
+  {
+    return base->Weight( i, j);
+  }
   virtual int vertices()
   {
     return Vertices;
@@ -71,7 +75,7 @@ protected:
    * Function add:
    * Adds an edge between vertices i and j
    */
-  virtual void add(int i, int j)
+  virtual void add(int i, int j,int w=1)
   {
     
   }
@@ -257,7 +261,7 @@ protected:
     cout<<endl;
 
   }
-  int Dijkstra(int source,int destination,int p[])
+  int Dijkstra(int source,int destination,int p[],int qw)
   {
     PriorityQ Q(Vertices);
     int sd[Vertices];
@@ -271,31 +275,35 @@ protected:
     }
     Q.insert(source,0);
     Q.makeHeap(0,Vertices-1);
-    // cout<<"start\n";
+    // cout<<"AA "<<source<<endl;
+    //  cout<<"start\n";
     // for (int i = 0; i < Q.get_length(); ++i)
     // {
     //   cout<<indicies[i]<<" "<<distances[i]<<endl;
     // }
     // cout<<"endl\n";
-    
+    int con=0;
     while(Q.get_length()!=0)
     {
+
       // cout<<"sss"<<endl;
       // cout<<"a "<<indicies[0]<<" "<<distances[0]<<endl;
       Q.ExtractMin(temp);
+
     //    cout<<"start\n";
     // for (int i = 0; i < Q.get_length(); ++i)
     // {
     //   cout<<indicies[i]<<" "<<distances[i]<<endl;
     // }
+      
     // cout<<"endl\n";
       sd[temp[1]]=temp[0];
      // visited[temp[1]]=1;
       // cout<<"b "<<temp[1]<<" "<<temp[0]<<endl;
       //cout<<"c "<<base->edgeExists(2,0)<<endl;
-      if(temp[1]==destination)
+      if(temp[1]==destination && qw==0)
       {
-        // cout<<"ss"<<sd[3]<<endl;
+        // cout<<"ss"<<sd[destination]<<endl;
         if(sd[destination]==inf || sd[destination]<0)
         {
           // cout<<"ss"<<endl;
@@ -303,20 +311,32 @@ protected:
         }
         return sd[destination];
       }
+      if(temp[1]==destination && qw==1)
+        return con;
+
+        con++;
+        // cout<<"aqq "<<temp[1]<<" "<<Q.value(Q.search(4))<<endl;
       for(int i=0;i<Vertices;i++)
       {
+
+        //if(temp[1]==6)
+          // cout<<"ama "<<temp[1]<<" "<<i<<" "<<Q.value(Q.search(4)) <<endl;
         if(base->edgeExists(temp[1],i))
         {
+          
           int b=Q.search(i);
+            // cout<<"aww "<<temp[1]<<" "<<i<<" "<<Q.value(Q.search(4))<<" "<<b<<endl;
           if(b==-1)
             continue;
           // cout<<i<<" "<<b<<" "<<distances[b]<<" "<<sd[temp[1]]+weight<<endl;
-          if(Q.value(b)>sd[temp[1]]+weight)
+          if(Q.value(b)>sd[temp[1]]+base->Weight(temp[1],i))
           {
             // cout<<"if in\n";
-            Q.DecreaseKey(b,sd[temp[1]]+weight);
+            Q.DecreaseKey(b,sd[temp[1]]+base->Weight(temp[1],i));
             p[i]=temp[1];
           }
+          // if(temp[1]==5 || temp[1]==6)
+            // cout<<"aa "<<temp[1]<<"ass "<<i<<" "<<b<<" "<<Q.value(b)<<" "<<sd[temp[1]]+base->Weight(temp[1],i)<<" "<<p[i]<<" "<<Q.value(Q.search(4))<<endl;
           // cout<<distances[i]
     //       cout<<"start\n";
     // for (int i = 0; i < Q.get_length(); ++i)
@@ -330,7 +350,7 @@ protected:
 
 
   }
-  void prims(int source,int tree[],int p[])
+  int prims(int source,int tree[],int p[],int des)
   {
   PriorityQ Q(Vertices);
     //int sd[Vertices];
@@ -362,6 +382,8 @@ protected:
     // }
     // cout<<"endl\n";
       tree[pos]=temp[1];
+      if(temp[1]==des)
+        return pos;
 
       pos++;
      // visited[temp[1]]=1;
@@ -377,10 +399,10 @@ protected:
           if(b==-1)
             continue;
           // cout<<i<<" "<<b<<" "<<distances[b]<<" "<<sd[temp[1]]+weight<<endl;
-          if(Q.value(b)>weight)
+          if(Q.value(b)>base->Weight(temp[1],i))
           {
             // cout<<"if in\n";
-            Q.DecreaseKey(b,weight);
+            Q.DecreaseKey(b,base->Weight(temp[1],i));
             p[i]=temp[1];
             // pos++;
           }

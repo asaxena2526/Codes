@@ -20,6 +20,8 @@ class GraphAdjacencyBase {
 	 * Function: edgeExists
 	 * Returns true if an edge exists between vertices i and j, false otherwise.
 	 */
+
+		virtual int Weight(int i,int j)=0;
   virtual bool edgeExists(int i, int j) = 0;
 	/*
 	 * Function: vertices
@@ -35,7 +37,7 @@ class GraphAdjacencyBase {
 	 * Function add:
 	 * Adds an edge between vertices i and j
 	 */
-  virtual void add(int i, int j)
+  virtual void add(int i, int j,int w=1)
   {
   //	cout<<"a5 "<<endl;
   }

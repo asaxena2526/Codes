@@ -23,5 +23,5 @@ int main()
     D.add(3, 5);
     D.add(4, 6);
     D.add(6, 5);
-    cout<<D.Modifiedbfs(4,2)<<endl;
+    cout<<D.Weight(4,6)<<endl;
 }

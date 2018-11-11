@@ -32,9 +32,9 @@ class DirectedGraph : public AbstractGraph {
   {
   		return this->base->edges();
   }	
-  virtual void add(int i, int j)
+  virtual void add(int i, int j,int w=1)
   {
-    this->base->add(i,j);
+    this->base->add(i,j,w);
   }
   virtual void remove(int i, int j)
   {

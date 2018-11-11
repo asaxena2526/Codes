@@ -33,12 +33,16 @@ int main()
 	{
 		for(int j=0;j<5;j++)
 		{
+			cout<<"aa\n";
 			if(A[i][j]=='G')
 			{
 				Q.enqueue(i*5+j);
+				cout<<"A "<<i*5+j<<endl;
 				while(Q.queue_length()!=0)
 				{
+					// cout<<"aaaaa "<<t;
 					int t=Q.dequeue();
+					// cout<<"aaaaa "<<t<<endl;
 					int r=t/5;
 					int c=t%5;
 					if(A[r][c]=='W')
@@ -47,76 +51,111 @@ int main()
 						continue;
 					}
 					
-				if(i==0 && j==0)
+				if(r==0 && c==0)
 				{
-					Q.enqueue((i+1)*5+j);
-					Q.enqueue(i*5+j+1);
-					add(r,c,i+1,j,D);
-					add(r,c,i,j+1,D);
+					cout<<"in\n";
+					Q.enqueue((r+1)*5+c);
+					Q.enqueue(r*5+c+1);
+					add(r,c,r+1,c,D);
+					add(r,c,r,c+1,D);
 				}
 				else
 				{
-					if(i==0 && j!=0  && j!=4)
+					if(r==0 && c!=0  && c!=4)
 					{
-						Q.enqueue((i+1)*5+j);
-						Q.enqueue(i*5+j+1);
-						Q.enqueue(i*5+j-1);
-						add(r,c,i+1,j,D);
-						add(r,c,i,j+1,D);
-						add(r,c,i,j-1,D);
+						cout<<"in\n";
+						Q.enqueue((r+1)*5+c);
+						Q.enqueue(r*5+c+1);
+						Q.enqueue(r*5+c-1);
+						add(r,c,r+1,c,D);
+						add(r,c,r,c+1,D);
+						add(r,c,r,c-1,D);
 					}
 					else
 					{
-						if(i!=0 && j==0 && i!=4 )
+						if(r!=0 && c==0 && r!=4 )
 						{
-							Q.enqueue(i*5+j+1);
-							Q.enqueue((i+1)*5+j);
-							Q.enqueue((i-1)*5+j);
-							add(r,c,i,j+1,D);
-							add(r,c,i+1,j,D);
-							add(r,c,i-1,j,D);
+							cout<<"in\n";
+							Q.enqueue(r*5+c+1);
+							Q.enqueue((r+1)*5+c);
+							Q.enqueue((r-1)*5+c);
+							add(r,c,r,c+1,D);
+							add(r,c,r+1,c,D);
+							add(r,c,r-1,c,D);
 						}
 						else
 						{
-							if(i!=0 && j!=0 && i!=4 && j!=4)
+							if(r!=0 && c!=0 && r!=4 && c!=4)
 							{
-								Q.enqueue(i*5+j+1);
-								Q.enqueue((i+1)*5+j);
-								Q.enqueue((i-1)*5+j);
-								Q.enqueue(i*5+j-1);
-								add(r,c,i,j+1,D);
-								add(r,c,i+1,j,D);
-								add(r,c,i,j-1,D);
-								add(r,c,i-1,j,D);
+								cout<<"in\n";
+								Q.enqueue(r*5+c+1);
+								Q.enqueue((r+1)*5+c);
+								Q.enqueue((r-1)*5+c);
+								Q.enqueue(r*5+c-1);
+								add(r,c,r,c+1,D);
+								add(r,c,r+1,c,D);
+								add(r,c,r,c-1,D);
+								add(r,c,r-1,c,D);
 							}
 							else
 							{
-								if(i==4 && j!=4)
+								if(r==4 && c!=4 && c!=0)
 								{
-									Q.enqueue(i*5+j+1);
-									Q.enqueue((i-1)*5+j);
-									Q.enqueue(i*5+j-1);
-									add(r,c,i,j+1,D);
-									add(r,c,i-1,j,D);
-									add(r,c,i,j-1,D);
+									cout<<"in\n";
+									Q.enqueue(r*5+c+1);
+									Q.enqueue((r-1)*5+c);
+									Q.enqueue(r*5+c-1);
+									add(r,c,r,c+1,D);
+									add(r,c,r-1,c,D);
+									add(r,c,r,c-1,D);
 								}
 								else
 								{
-									if(i!=4 && j==4)
+									if(r!=4 && c==4 && r!=0)
 									{
-										Q.enqueue((i+1)*5+j);
-										Q.enqueue((i-1)*5+j);
-										Q.enqueue(i*5+j-1);
-										add(r,c,i+1,j,D);
-										add(r,c,i-1,j,D);
-										add(r,c,i,j-1,D);
+										cout<<"in\n";
+										Q.enqueue((r+1)*5+c);
+										Q.enqueue((r-1)*5+c);
+										Q.enqueue(r*5+c-1);
+										add(r,c,r+1,c,D);
+										add(r,c,r-1,c,D);
+										add(r,c,r,c-1,D);
 									}
 									else
 									{
-										Q.enqueue((i-1)*5+j);
-										Q.enqueue(i*5+j-1);
-										add(r,c,i-1,j,D);
-										add(r,c,i,j-1,D);
+										if(r==4 && c==4)
+										{
+											cout<<"in\n";
+											Q.enqueue((r-1)*5+c);
+											Q.enqueue(r*5+c-1);
+											add(r,c,r-1,c,D);
+											add(r,c,r,c-1,D);
+										}
+										else
+										{
+											if(r==4 && c==0)
+											{
+												cout<<"in\n";
+												//Q.enqueue((i)*5+j);
+												Q.enqueue((r-1)*5+c);
+												Q.enqueue(r*5+c+1);
+												add(r,c,r-1,c,D);
+												add(r,c,r,c+1,D);
+												// add(r,c,i,j-1,D);
+											}
+											else
+											{
+												if(r==0 && c==4)
+												{
+													//cout<<"in\n";
+													Q.enqueue((r+1)*5+c);
+													Q.enqueue(r*5+c-1);
+													add(r,c,r+1,c,D);
+													add(r,c,r,c-1,D);
+												}
+												// cout<<"ot\n";
+											}
+										}
 
 									}
 								}
@@ -134,6 +173,7 @@ int main()
 			}
 		}
 	}
+	cout<<"aman\n";
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 5; j++)
