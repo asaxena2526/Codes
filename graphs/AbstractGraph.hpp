@@ -202,7 +202,7 @@ protected:
     cout<<endl;
 
   }
-   virtual int Modifiedbfs(int start,char c[][5],int column)
+   virtual int Modifiedbfs(int start,char** c,int column)
   {
     int colour[Vertices],visited[Vertices],ans[Vertices],level[Vertices];
     for(int i=0;i<Vertices;i++)

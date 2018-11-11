@@ -4,57 +4,21 @@
 #include "seqLinearList.hpp"
 using namespace std;
 
-int main()
+int main(int argc, char const *argv[])
 {
 	LinearList<string> s;
 	string qs;
-	for (int i = 0; i < 7; i++)
+	ifstream ptr;
+	ptr.open(argv[1]);
+
+	while(getline(ptr,qs))
 	{
-		cin>>qs;
 		s.insert(s.length()-1,qs);
 	}
-
-	// string s[7];
-	// for (int i = 0; i < 7; i++)
-	// {
-	// 	cin>>s[i];
-	// 	// s.insert(s.length()-1,qs);
-	// }
-	//int i=0;
-	// FILE *ptr;
-	// cout<<"A"<<endl;
-	// ptr= fopen("dictionary.txt","r");
-	// 	cout<<"A"<<endl;
-
-	// cout<<fscanf(ptr,"%s",&qs)<<endl;
+	ptr.close();
 	
-	// 		printf("%s\n", qs);
+	UndirectedGraph U(s.length()+1,'m');
 
-	// 	s.insert(s.length()-1,qs);
-	// 		cout<<"A"<<endl;
-	// ifstream ptr;
-	// ptr.open("dictionary.txt");
-
-	// while(getline(ptr,qs))
-	// {
-	// 	s.insert(s.length()-1,qs);
-	// }
-	// ptr.close();
-	//cout<<s.length()<<s[1].length()<<endl;
-// 	for (int i = 0; i < s.length(); ++i)
-// 	{
-// 		cout<<s[i]<<endl;
-// 	}
-// 	//string s[7];
-// cout<<"A"<<endl;
-	UndirectedGraph U(8,'m');
-
-	// for (int i = 0; i < 7; i++)
-	// {
-	// 	cin>>s[i];
-
-	// }
-	// cout<<U.edgeExists(0,4)<<endl;
 	for(int i=0;i<s.length();i++)
 	{
 		for(int j=i+1;j<s.length();j++)
@@ -117,23 +81,23 @@ int main()
 			x=i;
 
 	}
-	cout<<x<<endl;
+	// cout<<x<<endl;
 	int p[s.length()+1];
 	int o=U.Dijkstra(s.length(),x,p,0);
-	cout<<o<<endl;
-	// 	int q[o+1];
-	// cout<<"ANS"<<endl;
-	// q[o]=x;
-	// for(int i=1;i<=o;i++)
-	// {
-	// 	q[o-i]=p[x];
-	// 	x=p[x];
-	// }
-	// cout<<start<<endl;
-	// for (int i = 1; i <=o; ++i)
-	// {
-	// 	cout<<s[q[i]]<<endl;
-	// }
-	// cout<<o+1<<endl;
+	// cout<<o<<endl;
+		int q[o+1];
+	cout<<"ANS"<<endl;
+	q[o]=x;
+	for(int i=1;i<=o;i++)
+	{
+		q[o-i]=p[x];
+		x=p[x];
+	}
+	cout<<start<<endl;
+	for (int i = 1; i <=o; ++i)
+	{
+		cout<<s[q[i]]<<endl;
+	}
+	cout<<o+1<<endl;
 
 }
