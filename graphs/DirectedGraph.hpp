@@ -31,7 +31,15 @@ class DirectedGraph : public AbstractGraph {
   virtual int edges()
   {
   		return this->base->edges();
-  }		
+  }	
+  virtual void add(int i, int j)
+  {
+    this->base->add(i,j);
+  }
+  virtual void remove(int i, int j)
+  {
+      this->base->remove(i,j);
+  }	
 };
 
 #endif /* ifndef DIRECTED_GRAPH */

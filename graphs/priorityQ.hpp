@@ -1,17 +1,35 @@
 #ifndef PRIORITYQ
 #define PRIORITYQ 1
 
+typedef struct ${
+	int a;
+	int b;
+}Struct;
+
 
 class PriorityQ
 {
 	int length;
+	int size;
+	Struct* S;
 public:
 	PriorityQ(int n)
 	{
 		length=n;
+		size=-1;
+		S=new Struct[length];
 	}
-
-	void Heapify(int A[],int B[],int  k,int low,int high)
+	int value(int b)
+	{
+		return S[b].a;
+	}
+	void insert(int i,int x)
+	{
+		S[i].a=x;
+		S[i].b=i;
+		size++;
+	}
+	void Heapify(int  k,int low,int high)
     {
         int l=2*k+1-low;
         int r=2*k+2-low;
@@ -22,86 +40,102 @@ public:
         {
            	if(r<length)
            	{
-           		if(A[r]<=A[smallest])
+           		if(S[r].a<S[smallest].a)
            			smallest=r;
            	}  
            	if(l<length)
            	{
-           		if(A[l]<=A[smallest])
+           		if(S[l].a<S[smallest].a)
            			smallest=l;
            	}        			
         }
         if(smallest!=k)
         {
-           	int temp=A[k];
-           	A[k]=A[smallest];
-           	A[smallest]=temp;
-           	temp=B[k];
-           	B[k]=B[smallest];
-           	B[smallest]=temp;
-           	Heapify(A,B,smallest,low,high);
+           	Struct temp=S[k];
+           	S[k]=S[smallest];
+           	S[smallest]=temp;
+           	// temp=B[k];
+           	// B[k]=B[smallest];
+           	// B[smallest]=temp;
+           	Heapify(smallest,low,high);
         }
         return;
     }
 
-    void makeHeap(int A[],int B[],int low,int high)
+    void makeHeap(int low,int high)
     {
         for(int i=(high-1+low)/2;i>=low;i--)
-           	Heapify(A,B,i,low,high);
+           	Heapify(i,low,high);
     }
-    void heapSort(int A[],int B[],int low, int high)
+    void heapSort(int low, int high)
     {
-        makeHeap(A,B,low,high);
+        makeHeap(low,high);
         //int length=A.length();
         for(int i=high;i>low;i--)
        	{
-       		int temp=A[low];
-       		A[low]=A[i];
-       		A[i]=temp;
-       		temp=B[low];
-       		B[low]=B[i];
-       		B[i]=temp;
+       		Struct temp=S[low];
+       		S[low]=S[i];
+       		S[i]=temp;
+       		// temp=B[low];
+       		// B[low]=B[i];
+       		// B[i]=temp;
        		length--;
-       		Heapify(A,B,low,low,high);
+       		Heapify(low,low,high);
        	}
        	return;
     }
-    void DecreaseKey(int A[],int B[],int x,int k)
+    void DecreaseKey(int x,int k)
     {
-    	int i;
-    	for( i=0;i<length;i++)
+    	// int i,flag=0;
+    	// for( i=0;i<length;i++)
+    	// {
+    	// 	if(B[i]==x)
+    	// 	{
+    	// 		flag=1;
+    	// 		break;
+    	// 	}
+    	// }
+    	// if(flag==0)
+    	// 	return;
+    	int z=x;
+    	if(k<S[z].a)
     	{
-    		if(B[i]==x)
-    			break;
-    	}
-    	int a=i;
-    	if(k<A[a])
-    	{
-    		A[a]=k;
-    		i=(i-1)/2;
-    		while(i>=0 && A[a]<A[i])
+    		S[z].a=k;
+    		x=(x-1)/2;
+    		while(x>=0 && S[z].a<S[x].a)
     		{
-    			int temp=A[i];
-    			A[i]=A[a];
-    			A[a]=temp;
-    			temp=B[i];
-    			B[i]=B[a];
-    			B[a]=temp;
-    			a=i;
-    			i=(i-1)/2;
+    			Struct temp=S[x];
+    			S[x]=S[z];
+    			S[z]=temp;
+    			// temp=B[x];
+    			// B[x]=B[a];
+    			// B[a]=temp;
+    			// B[i]=a;
+    			// B[a]=i;
+    			z=x;
+    			x=(x-1)/2;
     		}
     	}
     }
-    void ExtractMin(int A[],int B[],int ans[])
+    void ExtractMin(int ans[])
     {
-    	ans[0]=A[0];
-    	ans[1]=B[0];
-    	A[0]=A[length-1];
-    	B[0]=B[length-1];
+    	ans[0]=S[0].a;
+    	ans[1]=S[0].b;
+    	S[0]=S[length-1];
+    	// B[0]=B[length-1];
 
     	length--;
-    	Heapify(A,B,0,0,length-1);
+    	Heapify(0,0,length-1);
 
+    }
+    int search(int x)
+    {
+    	for (int i = 0; i < length; i++)
+    	{
+    		if(S[i].b==x)
+    			return i;
+    	}
+    	return -1;
     } 
     int get_length()
     {

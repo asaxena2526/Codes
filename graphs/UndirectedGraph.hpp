@@ -27,11 +27,21 @@ class UndirectedGraph : public AbstractGraph {
   	/*
   	* Destructor
   	*/
-  	~UndirectedGraph();
+  	//~UndirectedGraph();
   virtual int edges()
   {
-      return this->base->edges()/2;
-  }  
+    return this->base->edges()/2;
+  }
+  virtual void add(int i, int j)
+  {
+    this->base->add(i,j);
+    this->base->add(j,i);
+  }
+  virtual void remove(int i, int j)
+  {
+      this->base->remove(i,j);
+      this->base->remove(j,i);
+  }   
   	
 	};
 	

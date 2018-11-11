@@ -1,22 +1,23 @@
 #ifndef QUEUE
 #define QUEUE 1
-
+template <class Item>
 class QNode
 {
   public:
-    int val;
-    QNode *next;
+    Item val;
+    QNode<Item> *next;
 
-    QNode(int x)
+    QNode(Item x)
     {
       val=x;
       next=NULL;
     }
 };
+template <class Item>
 class Queue
 { 
   public:
-    QNode *head,*tail;
+    QNode<Item> *head,*tail;
     int length;
 
     Queue()
@@ -30,28 +31,28 @@ class Queue
     {
       return length;
     }
-    void enqueue(int x)
+    void enqueue(Item x)
     {
       if(head==NULL)
       {
-        head= new QNode(x);
+        head= new QNode<Item>(x);
         tail=head;
       }
       else
       {
-        QNode *temp=tail;
-        temp->next=new QNode(x);
+        QNode<Item> *temp=tail;
+        temp->next=new QNode<Item>(x);
         tail=temp->next;
       }
       length++; 
     }
-    int dequeue()
+    Item dequeue()
     {
       if(head==NULL)
         return 0;
       else
       {
-        QNode *temp=head;
+        QNode<Item> *temp=head;
         int x;
       
       

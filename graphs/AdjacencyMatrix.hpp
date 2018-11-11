@@ -51,7 +51,7 @@ class AdjacencyMatrix : public GraphAdjacencyBase {
 		}
 		virtual void add(int i, int j)
 		{
-			//cout<<"a2 "<<endl;
+			// cout<<"a2 "<<endl;
 			Mat[i][j]=1;
 		}
 		void remove(int i, int j)

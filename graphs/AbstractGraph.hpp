@@ -4,7 +4,10 @@
 #include "AdjacencyList.hpp"
 #include "AdjacencyMatrix.hpp"
 #include "queue.hpp"
+#include "priorityQ.hpp"
 #include <iostream>
+#define inf 2147483647
+#define weight 1
 using namespace std;
 
 /*
@@ -70,7 +73,7 @@ protected:
    */
   virtual void add(int i, int j)
   {
-    base->add(i,j);
+    
   }
   /*
    * Function: remove
@@ -78,7 +81,7 @@ protected:
    */
   virtual void remove(int i, int j)
   {
-      base->remove(i,j);
+      
   }
   /*
    * Function dfs:
@@ -86,9 +89,9 @@ protected:
    * Runs the given function work, with the value of each vertex.
    */
  // virtual void dfs(void (*work)(int&)) = 0;
-  virtual void dfs(int start)
+  virtual int dfs(int start,int a[],int ans[])
   {
-    int colour[Vertices],visited[Vertices],ans[Vertices];
+    int colour[Vertices],visited[Vertices];
     for(int i=0;i<Vertices;i++)
     {
       colour[i]=-1;
@@ -100,6 +103,9 @@ protected:
     int pos=1;
     DFS(start,visited,colour,ans,pos);
     colour[start]=1;
+    int k=0;
+    a[k]=pos;
+    k++;
     for(int i=0;i<Vertices;i++)
     {
       if(visited[i]==0)
@@ -109,13 +115,16 @@ protected:
         ans[pos]=i;
         pos++;
         DFS(i,visited,colour,ans,pos);
+        a[k]=pos;
+        k++;
       }
     }
-    for (int i = 0; i < Vertices; i++)
-    {
-      cout<<ans[i]<<" ";
-    }
-    cout<<endl;
+    return k;
+    // for (int i = 0; i < Vertices; i++)
+    // {
+    //   cout<<ans[i]<<" ";
+    // }
+    // cout<<endl;
   }
   void DFS(int start,int visited[],int colour[],int ans[],int& pos)
     {
@@ -147,7 +156,7 @@ protected:
       visited[i]=0;
       level[i]=0;
     }
-    Queue Q;
+    Queue<int> Q;
     visited[start]=1;
     //ans[0]=start;
     int pos=0;
@@ -189,6 +198,205 @@ protected:
     cout<<endl;
 
   }
+   virtual int Modifiedbfs(int start,char c[][5],int column)
+  {
+    int colour[Vertices],visited[Vertices],ans[Vertices],level[Vertices];
+    for(int i=0;i<Vertices;i++)
+    {
+      colour[i]=0;
+      visited[i]=0;
+      level[i]=-1;
+    }
+    Queue<int> Q;
+    visited[start]=1;
+    level[start]=0;
+    //ans[0]=start;
+    int pos=0;
+    colour[start]=1;
+    Q.enqueue(start);
+    A:
+    while(Q.queue_length()!=0)
+    {
+      int t=Q.dequeue();
+      // if(start==3)
+       // cout<<"sss "<<start<<" "<<t<<" "<<t/column<<" "<<t%column<<endl;
+      if(c[t/column][t%column]=='G')
+        return level[t];
+      if(c[t/column][t%column]=='W')
+        continue;
+      ans[pos]=t;
+      pos++;
+      for(int i=0;i<Vertices;i++)
+      {
+        if(base->edgeExists(t,i)!=0 && visited[i]==0)
+        {
+            visited[i]=1;
+            //colour[i]=0;
+            
+            Q.enqueue(i);
+            level[i]=level[t]+1;
+            colour[i]=1;
+        }
+      }
+    }
+    for (int i = 0; i < Vertices; i++)
+    {
+      if(visited[i]==0)
+      { 
+        visited[i]=1;
+        Q.enqueue(i);
+        colour[i]=1; 
+        goto A;
+
+      }
+    }
+    for (int i = 0; i < Vertices; i++)
+    {
+      cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+
+  }
+  int Dijkstra(int source,int destination,int p[])
+  {
+    PriorityQ Q(Vertices);
+    int sd[Vertices];
+    int temp[2];
+    for (int i = 0; i < Vertices; i++)
+    {
+      Q.insert(i,inf);
+      sd[i]=inf;
+      // indicies[i]=i;
+      //visited[i]=0;
+    }
+    Q.insert(source,0);
+    Q.makeHeap(0,Vertices-1);
+    // cout<<"start\n";
+    // for (int i = 0; i < Q.get_length(); ++i)
+    // {
+    //   cout<<indicies[i]<<" "<<distances[i]<<endl;
+    // }
+    // cout<<"endl\n";
+    
+    while(Q.get_length()!=0)
+    {
+      // cout<<"sss"<<endl;
+      // cout<<"a "<<indicies[0]<<" "<<distances[0]<<endl;
+      Q.ExtractMin(temp);
+    //    cout<<"start\n";
+    // for (int i = 0; i < Q.get_length(); ++i)
+    // {
+    //   cout<<indicies[i]<<" "<<distances[i]<<endl;
+    // }
+    // cout<<"endl\n";
+      sd[temp[1]]=temp[0];
+     // visited[temp[1]]=1;
+      // cout<<"b "<<temp[1]<<" "<<temp[0]<<endl;
+      //cout<<"c "<<base->edgeExists(2,0)<<endl;
+      if(temp[1]==destination)
+      {
+        // cout<<"ss"<<sd[3]<<endl;
+        if(sd[destination]==inf || sd[destination]<0)
+        {
+          // cout<<"ss"<<endl;
+          return -1;
+        }
+        return sd[destination];
+      }
+      for(int i=0;i<Vertices;i++)
+      {
+        if(base->edgeExists(temp[1],i))
+        {
+          int b=Q.search(i);
+          if(b==-1)
+            continue;
+          // cout<<i<<" "<<b<<" "<<distances[b]<<" "<<sd[temp[1]]+weight<<endl;
+          if(Q.value(b)>sd[temp[1]]+weight)
+          {
+            // cout<<"if in\n";
+            Q.DecreaseKey(b,sd[temp[1]]+weight);
+            p[i]=temp[1];
+          }
+          // cout<<distances[i]
+    //       cout<<"start\n";
+    // for (int i = 0; i < Q.get_length(); ++i)
+    // {
+    //   cout<<indicies[i]<<" "<<distances[i]<<endl;
+    // }
+    // cout<<"endl\n";
+        }
+      }
+    }
+
+
+  }
+  void prims(int source,int tree[],int p[])
+  {
+  PriorityQ Q(Vertices);
+    //int sd[Vertices];
+    int temp[2];
+    for (int i = 0; i < Vertices; i++)
+    {
+      Q.insert(i,inf);
+      //visited[i]=0;
+      p[i]=-1;
+    }
+    Q.insert(source,0);
+    Q.makeHeap(0,Vertices-1);
+    // cout<<"start\n";
+    // for (int i = 0; i < Q.get_length(); ++i)
+    // {
+    //   cout<<indicies[i]<<" "<<distances[i]<<endl;
+    // }
+    // cout<<"endl\n";
+    int pos=0;
+    //p[0]=-1;
+    while(Q.get_length()!=0)
+    {
+      // cout<<"a "<<indicies[0]<<" "<<distances[0]<<endl;
+      Q.ExtractMin(temp);
+    //    cout<<"start\n";
+    // for (int i = 0; i < Q.get_length(); ++i)
+    // {
+    //   cout<<indicies[i]<<" "<<distances[i]<<endl;
+    // }
+    // cout<<"endl\n";
+      tree[pos]=temp[1];
+
+      pos++;
+     // visited[temp[1]]=1;
+      // cout<<"b "<<temp[1]<<" "<<temp[0]<<endl;
+      //cout<<"c "<<base->edgeExists(2,0)<<endl;
+      //if(temp[1]==destination)
+        //return sd[destination];
+      for(int i=0;i<Vertices;i++)
+      {
+        if(base->edgeExists(temp[1],i))
+        {
+          int b=Q.search(i);
+          if(b==-1)
+            continue;
+          // cout<<i<<" "<<b<<" "<<distances[b]<<" "<<sd[temp[1]]+weight<<endl;
+          if(Q.value(b)>weight)
+          {
+            // cout<<"if in\n";
+            Q.DecreaseKey(b,weight);
+            p[i]=temp[1];
+            // pos++;
+          }
+          // cout<<distances[i]
+    //       cout<<"start\n";
+    // for (int i = 0; i < Q.get_length(); ++i)
+    // {
+    //   cout<<indicies[i]<<" "<<distances[i]<<endl;
+    // }
+    // cout<<"endl\n";
+        }
+      }
+    } 
+  }
+
+
 };
 
 #endif /* ifndef ABSTRACT_GRAPH */
